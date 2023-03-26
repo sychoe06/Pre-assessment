@@ -6,7 +6,7 @@ import time
 
 pygame.init()
 
-screen = pygame.display.set_mode((1000, 720))
+screen = pygame.display.set_mode((800, 500))
 game_icon = pygame.image.load('llama_icon.png')
 pygame.display.set_icon(game_icon)
 pygame.display.set_caption("Llama game - by Sophia Choe")

@@ -1,12 +1,11 @@
-"""Component 1 - Setting up game display
-Created global variables for colours and fonts
-Changed screen background colour to white
+"""Component 2 - Starting the game
+Creating Llama and adding its coordinates
 """
 import pygame
 
 pygame.init()
 
-screen = pygame.display.set_mode((1000, 720))
+screen = pygame.display.set_mode((800, 500))
 game_icon = pygame.image.load('llama_icon.png')
 pygame.display.set_icon(game_icon)
 pygame.display.set_caption("Llama game - by Sophia Choe")
@@ -19,12 +18,23 @@ white = (255, 255, 255)
 pixel_font = pygame.font.SysFont("pixpixelfjverdana12pt", 20)
 
 quit_game = False
+
+# Llama coordinate
+llama_x = 384  # Middle point horizontally is (800-32 llama width)/2 = 384
+llama_y = 300  # Bottom point vertically
+
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit_game = True
 
     screen.fill(white)  # changes background to white
+
+    # Llama sprite
+    llama = pygame.Rect(llama_x, llama_y, 32, 32)
+    sprite = pygame.image.load('Llama.png').convert_alpha()
+    resized_sprite = pygame.transform.smoothscale(sprite, [32, 32])
+    screen.blit(resized_sprite, llama)
 
     pygame.display.update()
 pygame.quit()
