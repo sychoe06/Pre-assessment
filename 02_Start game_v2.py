@@ -36,7 +36,7 @@ while not quit_game:
     # Llama sprite
     llama_position = pygame.Rect(llama_x, llama_y, 32, 32)
     llama = pygame.image.load('Llama.png').convert_alpha()
-    resized_llama = pygame.transform.smoothscale(llama, [50, 50])
+    resized_llama = pygame.transform.smoothscale(llama, [55, 55])
     screen.blit(resized_llama, llama_position)
 
     # Ground

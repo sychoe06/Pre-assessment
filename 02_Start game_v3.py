@@ -1,5 +1,5 @@
 """Component 2 - Starting the game
-Making ground longer by adding multiple ground images
+Make ground with creating a line
 """
 import pygame
 
@@ -20,14 +20,9 @@ pixel_font = pygame.font.SysFont("pixpixelfjverdana12pt", 20)
 quit_game = False
 
 # Llama coordinate
-llama_x = 384  # Middle point horizontally is (800-32 llama width)/2 = 384
+llama_x = 200  # Middle point horizontally is (800-32 llama width)/2 = 384
 llama_y = 300  # Bottom point vertically
 
-# Ground coordinates
-ground_x_1 = 300
-ground_x_2 = 600
-ground_x_3 = 0
-ground_y = 244
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -38,24 +33,13 @@ while not quit_game:
     # Llama sprite
     llama_position = pygame.Rect(llama_x, llama_y, 32, 32)
     llama = pygame.image.load('Llama.png').convert_alpha()
-    resized_llama = pygame.transform.smoothscale(llama, [50, 50])
+    resized_llama = pygame.transform.smoothscale(llama, [55, 55])
     screen.blit(resized_llama, llama_position)
 
-    # Ground
-    ground_position_2 = pygame.Rect(ground_x_2, ground_y, 200, 150)
-    ground_2 = pygame.image.load('ground.png').convert_alpha()
-    resized_ground_2 = pygame.transform.smoothscale(ground_2, [300, 200])
-    screen.blit(resized_ground_2, ground_position_2)
-
-    ground_position_1 = pygame.Rect(ground_x_1, ground_y, 200, 150)
-    ground_1 = pygame.image.load('ground.png').convert_alpha()
-    resized_ground_1 = pygame.transform.smoothscale(ground_1, [300, 200])
-    screen.blit(resized_ground_1, ground_position_1)
-
-    ground_position_3 = pygame.Rect(ground_x_3, ground_y, 200, 150)
-    ground_3 = pygame.image.load('ground.png').convert_alpha()
-    resized_ground_3 = pygame.transform.smoothscale(ground_3, [300, 200])
-    screen.blit(resized_ground_3, ground_position_3)
+    # Create ground
+    ground = pygame.transform.scale(pygame.image.load("ground.png"), (850, 600))
+    llama_rect = ground.get_rect()
+    screen.blit(ground, llama_rect)
 
     pygame.display.update()
 pygame.quit()
