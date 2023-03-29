@@ -1,14 +1,9 @@
 """Component 3 - Llama jump
-Make Llama move up one when spacebar is pressed
+Make Llama jump when space bar is pressed
 """
 import pygame
 
 pygame.init()
-
-
-def llama_jump():
-    print()
-
 
 screen = pygame.display.set_mode((800, 500))
 game_icon = pygame.image.load('llama_icon.png')
@@ -23,25 +18,36 @@ white = (255, 255, 255)
 pixel_font = pygame.font.SysFont("pixpixelfjverdana12pt", 20)
 
 quit_game = False
-is_jump = False
-jump_count = 10
 
 # Llama coordinate
 llama_x = 200  # Middle point horizontally is (800-32 llama width)/2 = 384
 llama_y = 300  # Bottom point vertically
 
-llama_x_change = 0
-llama_y_change = 0
+jumping = False  # Starts out false because Llama doesn't jump until space bar
+Y_GRAVITY = 1
+JUMP_HEIGHT = 20
+Y_VELOCITY = JUMP_HEIGHT
 
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit_game = True
 
-    llama_x += llama_x_change
-    llama_y += llama_y_change
-
     screen.fill(white)  # changes background to white
+
+    # Returns a dictionary of all keys that can be pressed
+    keys = pygame.key.get_pressed()
+    # Checks that dictionary to see if space bar has been pressed
+    if keys[pygame.K_SPACE]:
+        jumping = True  # So jump happens only when space bar is pressed
+
+    if jumping:
+        llama_y -= Y_VELOCITY  # Makes Llama move up by 20px
+        Y_VELOCITY -= Y_GRAVITY  # Reduces velocity by 1px
+
+        if Y_VELOCITY < -JUMP_HEIGHT:  # When Y_VELOCITY is under -20
+            jumping = False
+            Y_VELOCITY = JUMP_HEIGHT  # Rests Y_VELOCITY to 20
 
     # Llama sprite
     llama_position = pygame.Rect(llama_x, llama_y, 32, 32)
