@@ -23,6 +23,9 @@ quit_game = False
 llama_x = 200  # Middle point horizontally is (800-32 llama width)/2 = 384
 llama_y = 300  # Bottom point vertically
 
+cactus_x = 780
+cactus_y = 300
+
 jumping = False  # Starts out false because Llama doesn't jump until space bar
 Y_GRAVITY = 1
 JUMP_HEIGHT = 20
@@ -50,15 +53,19 @@ while not quit_game:
             Y_VELOCITY = JUMP_HEIGHT  # Rests Y_VELOCITY to 20
 
     # Llama sprite
-    llama_position = pygame.Rect(llama_x, llama_y, 32, 32)
-    llama = pygame.image.load('Llama.png').convert_alpha()
-    resized_llama = pygame.transform.smoothscale(llama, [55, 55])
-    screen.blit(resized_llama, llama_position)
+    llama = pygame.transform.scale(pygame.image.load("Llama.png"), (55, 55))
+    llama_rect = pygame.Rect(llama_x, llama_y, 55, 55)
+    screen.blit(llama, llama_rect)
 
     # Create ground
     ground = pygame.transform.scale(pygame.image.load("ground.png"), (850, 600))
-    llama_rect = ground.get_rect()
-    screen.blit(ground, llama_rect)
+    ground_rect = ground.get_rect()
+    screen.blit(ground, ground_rect)
+
+    # Create cactus
+    cactus = pygame.transform.scale(pygame.image.load("cactus.png"), (55, 55))
+    cactus_rect = pygame.Rect(cactus_x, cactus_y, 55, 55)
+    screen.blit(cactus, cactus_rect)
 
     pygame.display.update()
 
