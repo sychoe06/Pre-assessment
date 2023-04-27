@@ -1,5 +1,5 @@
-"""Component 4 - Add obstacles
-Make the cactus continue to appear on the screen when it disappears
+"""Component 6 - Ending the game
+When llama touches the cactus make the game end
 """
 import pygame
 
@@ -15,7 +15,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 # Fonts for the game
-pixel_font = pygame.font.SysFont("pixpixelfjverdana12pt", 20)
+pixel_font = pygame.font.SysFont("pixpixelfjverdana12pt", 15)
 
 quit_game = False
 
@@ -33,6 +33,17 @@ cactus_start = False
 Y_GRAVITY = 0.5
 JUMP_HEIGHT = 15
 Y_VELOCITY = JUMP_HEIGHT
+
+score = 0
+
+
+def message(msg, txt_colour, bkgd_colour):
+    text = pixel_font.render(msg, True, txt_colour, bkgd_colour)
+
+    # Position of text
+    text_box = text.get_rect(center=(700, 50))
+    screen.blit(text, text_box)
+
 
 while not quit_game:
     for event in pygame.event.get():
@@ -54,11 +65,21 @@ while not quit_game:
             jumping = False
             Y_VELOCITY = JUMP_HEIGHT  # Rests Y_VELOCITY to 20
 
+            if llama_x > cactus_x:  # When llama jumps over cactus
+                score += 1
+                # print(score)  testing purposes
+
     if cactus_start:
         cactus_x_change = -1.5  # Makes cactus move left across screen
         cactus_x += cactus_x_change
         if cactus_x <= 0:
             cactus_x = 800
+
+    if llama_x == cactus_x and llama_y == cactus_y:
+        quit_game = True
+
+        print("Game over")  # testing purposes
+        print(score)
 
     screen.fill(white)  # changes background to white
 
@@ -75,8 +96,10 @@ while not quit_game:
     # Create cactus
     cactus = pygame.transform.scale(pygame.image.load("cactus.png"), (55, 55))
     cactus_rect = pygame.Rect(cactus_x, cactus_y, 55, 55)
-
     screen.blit(cactus, cactus_rect)
+
+    # Score
+    message(f"Score: {score}", black, white)
 
     pygame.display.update()
 

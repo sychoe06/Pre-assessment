@@ -34,6 +34,9 @@ Y_GRAVITY = 0.5
 JUMP_HEIGHT = 15
 Y_VELOCITY = JUMP_HEIGHT
 
+start_time = None
+clock = pygame.time.Clock()
+
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,10 +44,13 @@ while not quit_game:
 
     # Returns a dictionary of all keys that can be pressed
     keys = pygame.key.get_pressed()
+    if keys[pygame.K_p]:
+        start_time = pygame.time.get_ticks()
+        cactus_start = True  # Cactus only appears when space bar is pressed
+
     # Checks that dictionary to see if space bar has been pressed
     if keys[pygame.K_SPACE]:
         jumping = True  # So jump happens only when space bar is pressed
-        cactus_start = True  # Cactus only appears when space bar is pressed
 
     if jumping:
         llama_y -= Y_VELOCITY  # Makes Llama move up by 20px
@@ -59,6 +65,15 @@ while not quit_game:
         cactus_x += cactus_x_change
         if cactus_x <= 0:
             cactus_x = 800
+
+    if start_time:
+        time_since_enter = pygame.time.get_ticks() - start_time
+        seconds = time_since_enter % 1000
+        message = "Score: " + str(seconds)
+        screen.blit(pixel_font.render(message, True, black), (20, 20))
+
+    pygame.display.flip()
+    clock.tick(60)
 
     screen.fill(white)  # changes background to white
 

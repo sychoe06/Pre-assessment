@@ -1,5 +1,5 @@
-"""Component 4 - Add obstacles
-Make the cactus continue to appear on the screen when it disappears
+"""Component 5 - Score
+The score increases as the time of the llama surviving increases
 """
 import pygame
 
@@ -34,6 +34,11 @@ Y_GRAVITY = 0.5
 JUMP_HEIGHT = 15
 Y_VELOCITY = JUMP_HEIGHT
 
+score = 0
+start_time = None
+clock = pygame.time.Clock()
+start_game = False
+
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -45,6 +50,10 @@ while not quit_game:
     if keys[pygame.K_SPACE]:
         jumping = True  # So jump happens only when space bar is pressed
         cactus_start = True  # Cactus only appears when space bar is pressed
+        start_game = True
+
+    if start_game:
+        start_time = pygame.time.get_ticks()
 
     if jumping:
         llama_y -= Y_VELOCITY  # Makes Llama move up by 20px
@@ -59,6 +68,14 @@ while not quit_game:
         cactus_x += cactus_x_change
         if cactus_x <= 0:
             cactus_x = 800
+
+    if start_time:
+        time_since_enter = pygame.time.get_ticks() - start_time
+        message = "Score: " + str(time_since_enter)
+        screen.blit(pixel_font.render(message, True, black), (20, 20))
+
+        pygame.display.flip()
+        clock.tick(60)
 
     screen.fill(white)  # changes background to white
 
@@ -75,7 +92,6 @@ while not quit_game:
     # Create cactus
     cactus = pygame.transform.scale(pygame.image.load("cactus.png"), (55, 55))
     cactus_rect = pygame.Rect(cactus_x, cactus_y, 55, 55)
-
     screen.blit(cactus, cactus_rect)
 
     pygame.display.update()
